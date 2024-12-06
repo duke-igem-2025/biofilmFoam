@@ -11,3 +11,4 @@ runApplication topoSet
 runApplication setFields
 runApplication decomposePar
 runParallel $app
+runApplication reconstructPar

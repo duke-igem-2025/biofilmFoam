@@ -21,13 +21,13 @@ if sys.version_info<(3,5,0):
   sys.stderr.write("You need python 3.0 or later!\n")
   exit(1)
 
-plt.rcParams.update({
-    "text.usetex": True,
-    "font.family": "sans-serif",
-    "font.serif": ["cm"],
-    "font.size": 14,
-    "text.latex.preamble": r'\usepackage[cm]{sfmath}'
-})
+# plt.rcParams.update({
+#     "text.usetex": True,
+#     "font.family": "sans-serif",
+#     "font.serif": ["cm"],
+#     "font.size": 14,
+#     "text.latex.preamble": r'\usepackage[cm]{sfmath}'
+# })
 
 path = './postProcessing/sample/'
 

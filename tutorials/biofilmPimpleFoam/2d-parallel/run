@@ -24,5 +24,6 @@ mv log.setFields log.setFields.2
 
 runApplication decomposePar
 runParallel $app
+runApplication reconstructPar
 
 #runApplication $app

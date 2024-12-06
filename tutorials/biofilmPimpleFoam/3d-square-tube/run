@@ -14,5 +14,7 @@ runApplication setFields
 
 runApplication decomposePar
 runParallel $app
+runApplication reconstructPar
 
 #runApplication $app
+
