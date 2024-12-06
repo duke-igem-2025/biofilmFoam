@@ -28,8 +28,14 @@ To run this case, the procedure is as follows
    biofilmFoam
    postProcess -func sample
 
-All steps are also specified in the ``tutorials/biofilmFoam/1d-A/run`` script.
-Then, the script ``tutorials/biofilmFoam/1d-plot.py`` reproduces the figure illustrating the evolution of biofilm growth over time
+All steps are also specified in the ``tutorials/biofilmFoam/1d-A/run`` script. The generated folders contain the resulting fields at the output time steps. The simulation can be visualized using ParaView:
+
+.. prompt:: bash
+
+   paraview 1d-A.foam
+
+In this particular case, the results are sampled so as to have data in a format comparable to the reference paier.
+The script ``tutorials/biofilmFoam/1d-plot.py``, from sampled data in ``postProcessing``, reproduces the figure illustrating the evolution of biofilm growth over time
 
 .. prompt:: bash
 

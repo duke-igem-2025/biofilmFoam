@@ -20,12 +20,22 @@ Below is a commented version of the ``run`` script used to launch the case:
 .. literalinclude:: bf3d-2
    :language: text
 
-``runApplication`` and ``runParallel`` are internal OpenFOAM functions that automatically manage log files and retrieve the necessary arguments, such as the number of processors for the second function. Once the calculation is complete, the results can be visualized using ParaView
+``runApplication`` and ``runParallel`` are internal OpenFOAM functions that automatically manage log files and retrieve the necessary arguments, such as the number of processors for the second function. To modify the number of processors to use for the calculation, we have to edit and adapt the ``system/decomposeParDict`` file.
+
+Once the calculation is complete, the resulting fields can be reconstruct with the command
+
+.. prompt:: bash
+
+   reconstructPar
+   
+Then, the results can be visualized using ParaView
 
 .. prompt:: bash
 
    paraview 3d-A.foam
 
+The reconstruction step is not mandatory, as ParaView can load and visualize decomposed results on sub-domains (``processor*`` folders), which is particularly useful for visualizing during calculations.
+   
 For the same inoculum at the bottom surface, different types of biofilm formation can be obtained, depending on the model parameters provided in the ``constant/transportProperties`` file, as illustrated below.
 
 .. figure:: https://raw.githubusercontent.com/rguibert/public-images/refs/heads/main/biofilmFoam-tutorial-3d-b-1.png

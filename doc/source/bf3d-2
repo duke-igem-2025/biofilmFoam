@@ -26,3 +26,6 @@ runApplication decomposePar
 
 # run the case on 4 processors
 runParallel $app
+
+# reconstruct resulting fields
+runApplication reconstructPar
