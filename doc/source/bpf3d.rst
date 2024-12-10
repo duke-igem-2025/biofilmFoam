@@ -34,9 +34,19 @@ to the clogging by step of 24 hours.
    
 .. figure:: https://raw.githubusercontent.com/rguibert/public-images/refs/heads/main/biofilmPimpleFoam-tutorial-3d.png
    :width: 500px
-   :alt: biofilmFoam-tutorial-3d-b-2.png
+   :alt: biofilmPimpleFoam-tutorial-3d.png
    :align: center
 
+|br|
+	   
+In this configuration, with a mesh of around 1.3 million cells, the scalability of the solver was tested on the `CALMIP <https://www.calmip.univ-toulouse.fr/CALMIP>`_ supercomputing center
+(under allocation **p21016**). It is illustrated below (strong scaling)
+	   
+.. figure:: https://raw.githubusercontent.com/rguibert/public-images/refs/heads/main/biofilmPimpleFoam-tutorial-3d-speedup.png
+   :width: 400px
+   :alt: biofilmPimpleFoam-tutorial-3d-speedup.png
+   :align: center
+	   
 |br|
 	   
 .. |br| raw:: html
