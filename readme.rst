@@ -19,5 +19,5 @@ For information about installation, usage or numerical details, you should read 
 How to cite
 -----------
 
-Guibert et al, `Micro-continuum modeling of biofilm growth coupled with hydrodynamics in OpenFOAM <https://>`_, *SoftwareX*, **2024**.
+Guibert et al, `Micro-continuum modeling of biofilm growth coupled with hydrodynamics in OpenFOAM <https://www.sciencedirect.com/science/article/pii/S2352711024003819>`_, *SoftwareX*, **2025**.
 
