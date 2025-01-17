@@ -7,8 +7,8 @@ Welcome to biofilmFoam's documentation!
 | **Corresponding author**
 | Romain Guibert (romain.guibert@imft.fr)
 
-Contents
-========
+.. Contents
+.. ========
 
 .. toctree::
    :maxdepth: 1

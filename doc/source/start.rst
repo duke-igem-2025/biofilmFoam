@@ -34,3 +34,8 @@ The source code is organized in a classical OpenFOAM structure:
   - The ``license`` file describes the GPL-3.0 license.
 
   - The ``readme.rst`` file contains essential information about the toolbox.
+
+How to cite
+-----------
+
+Guibert et al, `Micro-continuum modeling of biofilm growth coupled with hydrodynamics in OpenFOAM <https://www.sciencedirect.com/science/article/pii/S2352711024003819>`_, *SoftwareX*, 2025.
