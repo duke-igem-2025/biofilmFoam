@@ -18,8 +18,8 @@
 # -- Project information -----------------------------------------------------
 
 project = 'biofilmFoam'
-copyright = '2024, Toulouse INP/IMFT, Romain Guibert'
-author = 'Romain Guibert'
+copyright = '2025, Rohit Suresh'
+author = 'Rohit Suresh'
 
 # The full version, including alpha/beta/rc tags
 release = 'main'

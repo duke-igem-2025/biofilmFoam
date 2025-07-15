@@ -1,0 +1,79 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2006                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+convertToMeters 1.0;
+
+vertices
+(
+    (0          0         0)
+    (1.2e-3     0         0)
+    (1.2e-3     1.89e-6   0)
+    (0          1.89e-6   0)
+    (0          0         1.2e-3)
+    (1.2e-3     0         1.2e-3)
+    (1.2e-3     1.89e-6   1.2e-3)
+    (0          1.89e-6   1.2e-3)
+);
+
+blocks
+(
+    hex (0 1 2 3 4 5 6 7) (120 1 120) simpleGrading (1 1 1)
+);
+
+boundary
+(
+    z0
+    {
+        type patch; // bottom (biofilm base)
+        faces ((0 1 2 3));
+    }
+
+    z1
+    {
+        type patch; // top (nutrient inlet)
+        faces ((4 5 6 7));
+    }
+
+    x0
+    {
+        type patch;
+        faces ((0 4 7 3));
+    }
+
+    x1
+    {
+        type patch;
+        faces ((1 5 6 2));
+    }
+
+    y0
+    {
+        type patch; // thin direction (out of plane)
+        faces ((0 1 5 4));
+    }
+
+    y1
+    {
+        type patch;
+        faces ((3 2 6 7));
+    }
+);
+
+mergePatchPairs
+(
+);
+
+// ************************************************************************* //

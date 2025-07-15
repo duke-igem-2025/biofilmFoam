@@ -15,3 +15,4 @@ darwin*
 build/
 _static/
 _templates/
+.vscode/

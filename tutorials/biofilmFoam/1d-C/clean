@@ -1,8 +1,0 @@
-#!/bin/bash
-
-. $WM_PROJECT_DIR/bin/tools/CleanFunctions
-
-cleanCase
-rm -rf 0/M
-rm -rf *.pdf *.dat
-touch 1d-C.foam

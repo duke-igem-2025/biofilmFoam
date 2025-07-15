@@ -10,8 +10,7 @@ set -x
 wmake libraries/numericalMethods
 wmake libraries/parabolicVelocity
 
-wmake solvers/biofilmFoam
-wmake solvers/biofilmPimpleFoam
+wmake solvers/biofilmFoam2D
 
 wmake utilities/biomass
 wmake utilities/inoculumGenerator
