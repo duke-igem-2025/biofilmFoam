@@ -1,0 +1,12 @@
+#!/bin/bash
+
+. $WM_PROJECT_DIR/bin/tools/RunFunctions
+
+app=biofilmFoam2D
+
+cp 0/M.org 0/M
+runApplication blockMesh
+runApplication inoculumGenerator -patch z0 -nbcells 18
+runApplication topoSet
+runApplication setFields
+runApplication $app
