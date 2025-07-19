@@ -44,5 +44,6 @@ runTime.controlDict().lookupOrDefault<scalar>("truncationError_M",truncationErro
 
 timestepManager dtManagerC(runTime, C, truncationError_C);
 timestepManager dtManagerM(runTime, M, truncationError_M);
+timestepManager dtManagerA(runTime, A, truncationError_M);
 
 // ************************************************************************* //

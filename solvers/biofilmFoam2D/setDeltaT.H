@@ -32,12 +32,13 @@ if (adjustTimeStep)
 
     scalar dtForM = dtManagerM.computeTimestep();
     scalar dtForC = dtManagerC.computeTimestep();
+    scalar dtForA = dtManagerA.computeTimestep();
 
     runTime.setDeltaT
     (
 	min
 	(
-	    min(dtForM, dtForC),
+	    min(dtForA, min(dtForM, dtForC)),
 	    min(1.2*runTime.deltaTValue(),maxDeltaT)
 	)
     );
