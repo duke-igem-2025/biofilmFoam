@@ -1,5 +1,12 @@
 volScalarField A_dimless_ = max(A / tau, SMALL);
-volScalarField hill_ = pow(A_dimless_, n) / (1.0 + pow(A_dimless_, n));
+volScalarField hill_ = pow(A, n) / (pow(tau, n) + pow(A, n));
+
+volScalarField decayCoeff = eta1 * hill_;
+volScalarField growthCoeff = mu * C / (k_1 + C);
+
+Info << "Decay range: " << gMin(decayCoeff) << " to " << gMax(decayCoeff) << endl;
+Info << "Growth range: " << gMin(growthCoeff) << " to " << gMax(growthCoeff) << endl;
+
 
 fvScalarMatrix MEqn
 (

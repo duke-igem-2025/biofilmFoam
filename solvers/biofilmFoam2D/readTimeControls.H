@@ -42,8 +42,11 @@ runTime.controlDict().lookupOrDefault<scalar>("truncationError_C",truncationErro
 const scalar truncationError_M =
 runTime.controlDict().lookupOrDefault<scalar>("truncationError_M",truncationError_global);
 
+const scalar truncationError_A =
+runTime.controlDict().lookupOrDefault<scalar>("truncationError_A",truncationError_global);
+
 timestepManager dtManagerC(runTime, C, truncationError_C);
 timestepManager dtManagerM(runTime, M, truncationError_M);
-timestepManager dtManagerA(runTime, A, truncationError_M);
+timestepManager dtManagerA(runTime, A, truncationError_A);
 
 // ************************************************************************* //
