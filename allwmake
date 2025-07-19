@@ -14,5 +14,6 @@ wmake solvers/biofilmFoam2D
 wmake solvers/biofilmFoam3D
 
 wmake utilities/biomass
+wmake utilities/sessileBiomass
 wmake utilities/inoculumGenerator
 wmake utilities/permeability

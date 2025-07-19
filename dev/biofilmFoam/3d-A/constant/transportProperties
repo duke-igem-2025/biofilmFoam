@@ -50,7 +50,7 @@ beta 5.520;
 beta 0; */
 
 n 2.5;
-tau 4e-09; // nm
+tau 10e-09; // nm
 
 eta1 3.6;
 
