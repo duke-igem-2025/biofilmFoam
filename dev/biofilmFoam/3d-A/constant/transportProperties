@@ -43,16 +43,18 @@ k_4 0.4;
 M_inf 1e04;
 
 
-/* alpha 0.5520;
-beta 5.520; */
+alpha 0.5520;
+beta 5.520;
 
-alpha 0;
-beta 0;
+/* alpha 0;
+beta 0; */
 
 n 2.5;
-tau 10e-09; // nm
+tau 30e-09; // nm
 
 eta1 3.6;
+eta2 0.3;
+k5 0.7;
 
 
 

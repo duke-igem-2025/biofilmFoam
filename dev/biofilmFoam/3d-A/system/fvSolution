@@ -41,6 +41,15 @@ solvers
       tolerance       1e-6;
       relTol          0;
     }
+  
+  N
+    {
+      solver          PCG;
+      preconditioner  DIC;
+      tolerance       1e-6;
+      relTol          0;
+    }
+    
     
 }
 

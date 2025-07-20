@@ -12,7 +12,7 @@ dimensionedScalar Da_biofilm (
 dimensionedScalar gamma (
     "gamma",
     dimensionSet(0, 0 , 0, 0, 0, 0, 0),
-    pow(1e-09,1)   // nm 
+    1e-09  // nm 
 );
 
 
@@ -38,7 +38,7 @@ volScalarField A_dimless = max(A / tau, SMALL);
 volScalarField hill = pow(A, n) / (pow(tau, n) + pow(A, n));
 
 volScalarField production =
-    gamma * (alpha + beta * hill) * M_inf * M;
+    gamma * (alpha + beta * hill) * M_inf * (M+N);
 
 fvScalarMatrix AEqn
 (

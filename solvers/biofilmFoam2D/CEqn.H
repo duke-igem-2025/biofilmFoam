@@ -13,15 +13,15 @@
 dimensionedScalar D_bulk (
     "D_bulk",
     dimensionSet(0, 2, -1, 0, 0, 0, 0),
-    0.00013824    // m^2/day in bulk
+    0.0001    // m^2/day in bulk
 );
 dimensionedScalar D_biofilm (
     "D_biofilm",
     dimensionSet(0, 2, -1, 0, 0, 0, 0),
-    0.00005    // m^2/day in biofilm
+    0.00008    // m^2/day in biofilm
 );
 
-volScalarField Mtot = M;       // non dimensional
+volScalarField Mtot = M+N;       // non dimensional
 
 // --- 3) Build a tmp<volScalarField> for the spatial D field ---
 tmp<volScalarField> Dtmp = D_bulk*(1.0 - Mtot) + D_biofilm*Mtot;

@@ -16,6 +16,7 @@ fvScalarMatrix MEqn
     fvm::Sp(mu*C/(k_1+C), M)
     - fvm::Sp(k_4, M)
     - fvm::Sp(eta1 * hill_, M)
+    + fvm::Sp(eta2*N/(k5+M), M)
 );
 
 solve(MEqn);

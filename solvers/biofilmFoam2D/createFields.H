@@ -51,6 +51,21 @@ volScalarField A
 
 dimensionedScalar ddtA("ddtA", dimensionSet(0,0,0,0,0), 0.);
 
+volScalarField N
+(
+    IOobject
+    (
+	"N",
+	runTime.timeName(),
+	mesh,
+	IOobject::MUST_READ,
+	IOobject::AUTO_WRITE
+    ),
+    mesh
+);
+
+dimensionedScalar ddtN("ddtN", dimensionSet(0,0,0,0,0), 0.);
+
 // --- transportProperties
 
 Info << "Reading transportProperties\n" << endl;
@@ -118,6 +133,9 @@ dimensionedScalar n ("n", dimensionSet(0, 0, 0, 0, 0, 0, 0), transportProperties
 dimensionedScalar tau ("tau", dimensionSet(0, -3, 0, 0, 1, 0, 0), transportProperties);
 
 dimensionedScalar eta1 ("eta1", dimensionSet(0, 0, -1, 0, 0, 0, 0), transportProperties);
+dimensionedScalar eta2 ("eta2", dimensionSet(0, 0, -1, 0, 0, 0, 0), transportProperties);
+
+dimensionedScalar k5 ("k5", dimensionSet(0, 0, 0, 0, 0, 0, 0), transportProperties);
 
 
 volScalarField Mdim = M / M_inf;

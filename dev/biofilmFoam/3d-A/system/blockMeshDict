@@ -19,13 +19,13 @@ convertToMeters 1.0;
 vertices
 (
     (0          0         0)
-    (1.2e-3     0         0)
-    (1.2e-3     1.89e-6   0)
+    (4.0e-3     0         0)
+    (4.0e-3     1.89e-6   0)
     (0          1.89e-6   0)
-    (0          0         1.2e-3)
-    (1.2e-3     0         1.2e-3)
-    (1.2e-3     1.89e-6   1.2e-3)
-    (0          1.89e-6   1.2e-3)
+    (0          0         1.6e-3)
+    (4.0e-3     0         1.6e-3)
+    (4.0e-3     1.89e-6   1.6e-3)
+    (0          1.89e-6   1.6e-3)
 );
 
 blocks
@@ -61,13 +61,13 @@ boundary
 
     y0
     {
-        type patch; // thin direction (out of plane)
+        type empty; // thin direction (out of plane)
         faces ((0 1 5 4));
     }
 
     y1
     {
-        type patch;
+        type empty;
         faces ((3 2 6 7));
     }
 );

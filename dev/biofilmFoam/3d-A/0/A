@@ -32,12 +32,12 @@ boundaryField
 
   y0
     {
-      type zeroGradient;
+      type empty;
     }
   
   y1
     {
-      type zeroGradient;
+      type empty;
     }
   
   z0
