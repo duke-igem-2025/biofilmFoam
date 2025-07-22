@@ -1,5 +1,5 @@
 volScalarField A_dimless_ = max(A / tau, SMALL);
-volScalarField hill_ = pow(A, n) / (pow(tau, n) + pow(A, n));
+volScalarField hill_ = eta1*pow(A, n) / (pow(tau, n) + pow(A, n));
 
 volScalarField decayCoeff = eta1 * hill_;
 volScalarField growthCoeff = mu * C / (k_1 + C);
@@ -15,7 +15,7 @@ fvScalarMatrix MEqn
     == 
     fvm::Sp(mu*C/(k_1+C), M)
     - fvm::Sp(k_4, M)
-    - fvm::Sp(eta1 * hill_, M)
+    - fvm::Sp(hill_, M)
     + fvm::Sp(eta2*N/(k5+M), M)
 );
 

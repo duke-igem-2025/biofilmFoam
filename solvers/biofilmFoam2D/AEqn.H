@@ -1,12 +1,12 @@
 dimensionedScalar Da_bulk (
     "Da_bulk",
     dimensionSet(0, 2, -1, 0, 0, 0, 0),
-    0.000078  
+    0.000078 / 86400 
 );
 dimensionedScalar Da_biofilm (
     "Da_biofilm",
     dimensionSet(0, 2, -1, 0, 0, 0, 0),
-    0.000039    
+    0.000039 / 86400 
 );
 
 dimensionedScalar gamma (
@@ -50,4 +50,4 @@ fvScalarMatrix AEqn
 );
 
 solve(AEqn);
-A = max(A, dimensionedScalar("Amin", A.dimensions(), SMALL));
+// A = max(A, dimensionedScalar("Amin", A.dimensions(), SMALL));

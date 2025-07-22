@@ -3,12 +3,12 @@ volScalarField hill_N = pow(A, n) / (pow(tau, n) + pow(A, n));
 dimensionedScalar Dn_bulk (
     "Dn_bulk",
     dimensionSet(0, 2, -1, 0, 0, 0, 0),
-    0.0001
+    0.0001 / 86400 
 );
 dimensionedScalar Dn_biofilm (
     "Dn_biofilm",
     dimensionSet(0, 2, -1, 0, 0, 0, 0),
-    0.00002    
+    0.00002  / 86400    
 );
 
 Info << "min/max hill_N: " << gMin(hill_N) << " / " << gMax(hill_N) << endl;

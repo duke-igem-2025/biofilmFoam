@@ -13,12 +13,12 @@
 dimensionedScalar D_bulk (
     "D_bulk",
     dimensionSet(0, 2, -1, 0, 0, 0, 0),
-    0.0001    // m^2/day in bulk
+    0.0001 / 86400     // m^2/day in bulk
 );
 dimensionedScalar D_biofilm (
     "D_biofilm",
     dimensionSet(0, 2, -1, 0, 0, 0, 0),
-    0.00008    // m^2/day in biofilm
+    0.00008 / 86400     // m^2/day in biofilm
 );
 
 volScalarField Mtot = M+N;       // non dimensional
