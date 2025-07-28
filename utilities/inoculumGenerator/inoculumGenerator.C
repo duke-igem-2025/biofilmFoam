@@ -33,6 +33,8 @@ Application
 #include <fstream>
 #include <stdlib.h>
 #include <time.h>
+#include "HashSet.H"
+
 
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
@@ -169,37 +171,75 @@ int main(int argc, char *argv[])
 
     int tabCells[args.get<int>("nbcells")];
 
-    srand(time(NULL)); // not pseudo-random
+    srand(42); // not pseudo-random
   
-    for (int i=0; i<args.get<int>("nbcells"); ++i) {
-	
-	int v = rand() % cPatch.size();
-	int faceid = cPatch.start() + v;
-	int cellid = mesh.owner()[faceid];
-	bool test = true;
-	
-	for (int j=0; j<i; ++j) {
-	    if (tabCells[j] == cellid) {
-		test = false;
-	    }
-	}
+labelHashSet selectedCells;
 
-	if ( (mesh.C()[cellid][0]<xmin) || (mesh.C()[cellid][0]>xmax) ||
-       	     (mesh.C()[cellid][1]<ymin) || (mesh.C()[cellid][1]>ymax) ||
-	     (mesh.C()[cellid][2]<zmin) || (mesh.C()[cellid][2]>zmax) ) {
-	    test = false;
-	}
-	
-	if (test == true) {
-	    tabCells[i] = cellid;
-	    topoFile << "      " << cellid << "\n";
-	    Info << cellid << endl;
-	}
-	else {
-	    i--;
-	}
-	
+
+for (int i = 0; i < args.get<int>("nbcells"); ++i)
+{
+    int v = rand() % cPatch.size();
+    int faceid = cPatch.start() + v;
+    int cellid = mesh.owner()[faceid];
+    
+    const point& center = mesh.C()[cellid];
+
+    // Bounding box check
+    if ((center.x() < xmin) || (center.x() > xmax) ||
+        (center.y() < ymin) || (center.y() > ymax) ||
+        (center.z() < zmin) || (center.z() > zmax))
+    {
+        i--;
+        continue;
     }
+
+    // Get nearby cells in the XZ plane
+    scalar dx = 3.5e-5; // slightly over dx = 3.33e-5
+    scalar dz = 1.6e-5; // slightly over dz = 1.575e-5
+
+    labelHashSet newCells;
+
+    forAll(mesh.C(), cellI)
+    {
+        const point& pt = mesh.C()[cellI];
+
+        if (
+            fabs(pt.x() - center.x()) < dx &&
+            fabs(pt.z() - center.z()) < dz &&
+            fabs(pt.y() - center.y()) < 1e-9  // y must match exactly
+        )
+        {
+            newCells.insert(cellI);
+        }
+    }
+
+    // Check for duplicates
+    bool overlap = false;
+    forAllConstIter(labelHashSet, newCells, iter)
+    {
+        if (selectedCells.found(iter.key()))
+        {
+            overlap = true;
+            break;
+        }
+    }
+
+    if (overlap)
+    {
+        i--;
+        continue;
+    }
+
+    // Accept cells
+    forAllConstIter(labelHashSet, newCells, iter)
+    {
+        selectedCells.insert(iter.key());
+        topoFile << "      " << iter.key() << "\n";
+        Info << iter.key() << endl;
+    }
+}
+
+
 
     topoFile << "      );\n";  
     topoFile << " }\n";
