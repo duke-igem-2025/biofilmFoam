@@ -9,62 +9,46 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       dictionary;
-    location    "system";
-    object      fvSolution;
+    class       volScalarField;
+    object      E;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-solvers
+dimensions      [0 0 0 0 0 0 0];
+
+internalField   uniform 0;
+
+boundaryField
 {
+  x0
+    {
+      type zeroGradient;
+    }
+  
+  x1
+    {
+      type zeroGradient;
+    }
 
-  M
+  y0
     {
-      solver          PCG;
-      preconditioner  DIC;
-      tolerance       1e-6;
-      relTol          0;
+      type empty;
+    }
+  
+  y1
+    {
+      type empty;
+    }
+  
+  z0
+    {
+      type zeroGradient;
     }
 
-  C
+  z1
     {
-      solver          PCG;
-      preconditioner  DIC;
-      tolerance       1e-6;
-      relTol          0;
+      type zeroGradient;
     }
-  
-  A
-    {
-      solver          PCG;
-      preconditioner  DIC;
-      tolerance       1e-6;
-      relTol          0;
-    }
-  
-  N
-    {
-      solver          PCG;
-      preconditioner  DIC;
-      tolerance       1e-6;
-      relTol          0;
-    }
-  
-  E
-    {
-      solver          PCG;
-      preconditioner  DIC;
-      tolerance       1e-6;
-      relTol          0;
-    }
-    
 }
-
-PIMPLE
-{
-    nCorrectors     2;
-    nNonOrthogonalCorrectors 0;
-}
-
 
 // ************************************************************************* //

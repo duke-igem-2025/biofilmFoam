@@ -66,6 +66,21 @@ volScalarField N
 
 dimensionedScalar ddtN("ddtN", dimensionSet(0,0,0,0,0), 0.);
 
+volScalarField E
+(
+    IOobject
+    (
+	"E",
+	runTime.timeName(),
+	mesh,
+	IOobject::MUST_READ,
+	IOobject::AUTO_WRITE
+    ),
+    mesh
+);
+
+dimensionedScalar ddtE("ddtE", dimensionSet(0,0,0,0,0), 0.);
+
 // --- transportProperties
 
 Info << "Reading transportProperties\n" << endl;
@@ -136,6 +151,35 @@ dimensionedScalar eta1 ("eta1", dimensionSet(0, 0, -1, 0, 0, 0, 0), transportPro
 dimensionedScalar eta2 ("eta2", dimensionSet(0, 0, -1, 0, 0, 0, 0), transportProperties);
 
 dimensionedScalar k5 ("k5", dimensionSet(0, 0, 0, 0, 0, 0, 0), transportProperties);
+
+dimensionedScalar gamma_EPS_prod(
+    "gamma_EPS_prod",
+    dimensionSet(0, 0, -1, 0, 0, 0, 0),  // 1/time (adjust if E has other base dims)
+    0.1   / 86400                                  // value in 1/s (or 1/your_time_unit)
+);
+
+dimensionedScalar gamma_EPS_deg(
+    "gamma_EPS_prod",
+    dimensionSet(0, 0, -1, 0, 0, 0, 0),  // 1/time (adjust if E has other base dims)
+    0.05   / 86400                                  // value in 1/s (or 1/your_time_unit)
+);
+
+dimensionedScalar eps_disp(
+    "eps_disp",
+    dimensionSet(0, 0, -1, 0, 0, 0, 0),  // 1/time (adjust if E has other base dims)
+    0.05   / 86400                                  // value in 1/s (or 1/your_time_unit)
+);
+
+dimensionedScalar E_threshold ("E_threshold", dimensionSet(0, 0, 0, 0, 0, 0, 0), transportProperties);
+dimensionedScalar E_crit ("E_crit", dimensionSet(0, 0, 0, 0, 0, 0, 0), transportProperties);
+
+dimensionedScalar eps_disp_death(
+    "eps_disp_death",
+    dimensionSet(0, 0, -1, 0, 0, 0, 0),  // 1/time (adjust if E has other base dims)
+    transportProperties                                 // value in 1/s (or 1/your_time_unit)
+);
+
+dimensionedScalar D_enzyme ("D_enzyme", dimensionSet(0, 0, 0, 0, 0, 0, 0), transportProperties);
 
 
 volScalarField Mdim = M / M_inf;

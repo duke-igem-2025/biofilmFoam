@@ -68,6 +68,7 @@ int main(int argc, char *argv[])
 	#include "MEqn.H"
     #include "AEqn.H"
     #include "NEqn.H"
+    #include "EEqn.H"
 	#include "updateBiofilmPhase.H"
 
 	dtManagerC.updateDerivatives();
@@ -85,6 +86,10 @@ int main(int argc, char *argv[])
 	
 	Info << "N in [" << gMin(N) << ";" << gMax(N) << "]" << endl;
 	
+    dtManagerE.updateDerivatives();
+	
+	Info << "E in [" << gMin(E) << ";" << gMax(E) << "]" << endl;
+
 	runTime.write();
 
 	runTime.printExecutionTime(Info);

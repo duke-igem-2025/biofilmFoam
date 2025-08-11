@@ -35,6 +35,7 @@ if (adjustTimeStep)
     scalar dtForA = dtManagerA.computeTimestep();
     scalar dtForN = dtManagerN.computeTimestep();
 
+
     runTime.setDeltaT
     (
 	min
