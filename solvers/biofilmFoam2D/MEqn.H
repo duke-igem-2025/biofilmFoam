@@ -8,6 +8,8 @@ Info << "Decay range: " << gMin(decayCoeff) << " to " << gMax(decayCoeff) << end
 Info << "Growth range: " << gMin(growthCoeff) << " to " << gMax(growthCoeff) << endl;
 
 
+
+
 fvScalarMatrix MEqn
 (
     fvm::ddt(M)
@@ -18,7 +20,7 @@ fvScalarMatrix MEqn
     - fvm::Sp(hill_, M)
     + fvm::Sp(eta2*N/(k5+M), M)
     // - fvm::Sp(gamma_EPS_prod, M)
-    - fvm::Sp(eps_disp_death*max(scalar(0), (E_crit - E)/E_crit), M)
+    // - fvm::Sp(eps_disp_death*max(scalar(0), (E_crit - E)/E_crit), M)
 );
 
 solve(MEqn);

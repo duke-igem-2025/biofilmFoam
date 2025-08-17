@@ -56,8 +56,8 @@ fvScalarMatrix EEqn
     
     == 
     ddtM*gamma_EPS_prod*M
-    - fvm::Sp(gamma_EPS_deg*(C/(k_1 + C)), E)
-    - fvm::Sp(k_orphan*max(scalar(0), E_threshold - M), E)
+    - fvm::Sp(gamma_EPS_deg*(C/(k_1 + C))*M, E)
+    - fvm::Sp(k_orphan*M*max(scalar(0), E_threshold - M), E)
     - fvm::Sp(eps_disp*D_enzyme, E)
 );
 
