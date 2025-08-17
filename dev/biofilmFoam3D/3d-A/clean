@@ -1,8 +1,0 @@
-#!/bin/bash
-
-. $WM_PROJECT_DIR/bin/tools/CleanFunctions
-
-cleanCase
-rm -rf 0/M
-rm -rf system/topoSetDict
-touch 3d-A.foam

@@ -31,7 +31,19 @@ volScalarField De
     Detmp                        
 );
 
-volScalarField production_e = gamma_EPS_prod*M;
+Info << "De_bulk value: " << De_bulk.value() << endl;
+Info << "De_biofilm value: " << De_biofilm.value() << endl;
+Info << "k_orphan value: " << k_orphan.value() << endl;
+
+// Explicit finite difference approximation of growth
+// Choose a reference biomass scale, e.g., 1.0 if M is already normalized
+scalar M_ref = 1.0;
+
+// Compute dimensionless growth rate
+volScalarField dM_dt_dimless = (M - M.oldTime()) / (runTime.deltaT() * M_ref);  
+Info << "dM_dt dimensions: " << dM_dt_dimless.dimensions() << endl;
+volScalarField production_e = gamma_EPS_prod * dM_dt_dimless;          // gamma_EPS_prod ~ dimensionless
+
 volScalarField decay_e = eps_disp*D_enzyme*E;
 
 Info << "production range: " << gMin(production_e) << " to " << gMax(production_e) << endl;
@@ -43,7 +55,7 @@ fvScalarMatrix EEqn
     // - fvm::laplacian(De, E, "laplacian(De,E)")
     
     == 
-    production_e
+    ddtM*gamma_EPS_prod*M
     - fvm::Sp(gamma_EPS_deg*(C/(k_1 + C)), E)
     - fvm::Sp(k_orphan*max(scalar(0), E_threshold - M), E)
     - fvm::Sp(eps_disp*D_enzyme, E)

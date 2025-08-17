@@ -17,7 +17,7 @@ fvScalarMatrix MEqn
     - fvm::Sp(k_4, M)
     - fvm::Sp(hill_, M)
     + fvm::Sp(eta2*N/(k5+M), M)
-    - fvm::Sp(gamma_EPS_prod, M)
+    // - fvm::Sp(gamma_EPS_prod, M)
     - fvm::Sp(eps_disp_death*max(scalar(0), (E_crit - E)/E_crit), M)
 );
 

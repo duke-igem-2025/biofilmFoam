@@ -155,7 +155,7 @@ dimensionedScalar k5 ("k5", dimensionSet(0, 0, 0, 0, 0, 0, 0), transportProperti
 dimensionedScalar gamma_EPS_prod(
     "gamma_EPS_prod",
     dimensionSet(0, 0, -1, 0, 0, 0, 0),  // 1/time (adjust if E has other base dims)
-    0.1   / 86400                                  // value in 1/s (or 1/your_time_unit)
+    1e4  / 86400                                  // value in 1/s (or 1/your_time_unit)
 );
 
 dimensionedScalar gamma_EPS_deg(
@@ -167,7 +167,7 @@ dimensionedScalar gamma_EPS_deg(
 dimensionedScalar eps_disp(
     "eps_disp",
     dimensionSet(0, 0, -1, 0, 0, 0, 0),  // 1/time (adjust if E has other base dims)
-    0.05   / 86400                                  // value in 1/s (or 1/your_time_unit)
+    0.25   / 86400                                  // value in 1/s (or 1/your_time_unit)
 );
 
 dimensionedScalar E_threshold ("E_threshold", dimensionSet(0, 0, 0, 0, 0, 0, 0), transportProperties);

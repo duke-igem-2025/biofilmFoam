@@ -11,7 +11,6 @@ wmake libraries/numericalMethods
 wmake libraries/parabolicVelocity
 
 wmake solvers/biofilmFoam2D
-wmake solvers/biofilmFoam3D
 
 wmake utilities/biomass
 wmake utilities/sessileBiomass

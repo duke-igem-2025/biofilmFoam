@@ -1,3 +1,0 @@
-biofilmFoam3D.C
-
-EXE = $(FOAM_USER_APPBIN)/biofilmFoam3D
