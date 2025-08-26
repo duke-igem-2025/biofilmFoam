@@ -161,13 +161,19 @@ dimensionedScalar gamma_EPS_prod(
 dimensionedScalar gamma_EPS_deg(
     "gamma_EPS_prod",
     dimensionSet(0, 0, -1, 0, 0, 0, 0),  // 1/time (adjust if E has other base dims)
-    0.05   / 86400                                  // value in 1/s (or 1/your_time_unit)
+    0.00   / 86400                                  // value in 1/s (or 1/your_time_unit)
 );
 
 dimensionedScalar eps_disp(
     "eps_disp",
     dimensionSet(0, 0, -1, 0, 0, 0, 0),  // 1/time (adjust if E has other base dims)
-    0.25   / 86400                                  // value in 1/s (or 1/your_time_unit)
+    0.5   / 86400                                  // value in 1/s (or 1/your_time_unit)
+);
+
+dimensionedScalar M_deg_eps(
+    "M_deg_eps",
+    dimensionSet(0, 0, -1, 0, 0, 0, 0),  // 1/time (adjust if E has other base dims)
+    1                           // value in 1/s (or 1/your_time_unit)
 );
 
 dimensionedScalar E_threshold ("E_threshold", dimensionSet(0, 0, 0, 0, 0, 0, 0), transportProperties);

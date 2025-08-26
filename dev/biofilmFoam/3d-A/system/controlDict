@@ -23,7 +23,8 @@ startTime         0;
 
 stopAt            endTime;
 
-endTime           8640000; // 643h
+endTime           864000; // 643h
+// endTime           8640000; // 643h
 
 deltaT            5e-9;
 

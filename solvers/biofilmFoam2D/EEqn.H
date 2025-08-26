@@ -14,7 +14,7 @@ tmp<volScalarField> Detmp = De_bulk*(1.0 - M) + De_biofilm*M;
 dimensionedScalar k_orphan (
     "k_orphan",
     dimensionSet(0, 0, -1, 0, 0, 0, 0),
-    10  / 86400    
+    60  / 86400    
 );
 
 
@@ -55,9 +55,9 @@ fvScalarMatrix EEqn
     // - fvm::laplacian(De, E, "laplacian(De,E)")
     
     == 
-    ddtM*gamma_EPS_prod*M
-    - fvm::Sp(gamma_EPS_deg*(C/(k_1 + C))*M, E)
-    - fvm::Sp(k_orphan*M*max(scalar(0), E_threshold - M), E)
+    (ddtM)*gamma_EPS_prod*M
+    + gamma_EPS_deg * M * (C/(k_1 + C))
+    - fvm::Sp(k_orphan*max(scalar(0), E_threshold - M), E)
     - fvm::Sp(eps_disp*D_enzyme, E)
 );
 
