@@ -56,10 +56,10 @@ eta1 0.0000474537037;
 eta2 0.00002430555556;
 k5 0.7;
 
-E_threshold 0.4;
+E_threshold 0.1;
 
-E_crit 0.1;
-eps_disp_death 0.00001157407407;
+E_crit 0.2;
+eps_disp_death 0.0001289944444;
 
 D_enzyme 0.7;
 // D_enzyme 0;

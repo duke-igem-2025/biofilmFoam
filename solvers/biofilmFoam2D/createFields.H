@@ -161,13 +161,13 @@ dimensionedScalar gamma_EPS_prod(
 dimensionedScalar gamma_EPS_deg(
     "gamma_EPS_prod",
     dimensionSet(0, 0, -1, 0, 0, 0, 0),  // 1/time (adjust if E has other base dims)
-    0.00   / 86400                                  // value in 1/s (or 1/your_time_unit)
+    0.00003472222222 / 3                               // value in 1/s (or 1/your_time_unit)
 );
 
 dimensionedScalar eps_disp(
     "eps_disp",
     dimensionSet(0, 0, -1, 0, 0, 0, 0),  // 1/time (adjust if E has other base dims)
-    0.5   / 86400                                  // value in 1/s (or 1/your_time_unit)
+   0.000001736111111                                // value in 1/s (or 1/your_time_unit)
 );
 
 dimensionedScalar M_deg_eps(
