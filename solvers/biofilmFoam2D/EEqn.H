@@ -67,6 +67,7 @@ fvScalarMatrix EEqn
     - k_deg * E
     - fvm::Sp(k_orphan*max(scalar(0), E_threshold - M), E)
     - fvm::Sp(eps_disp*D_enzyme, E)
+    // - eps_disp*D_enzyme
 );
 
 solve(EEqn);

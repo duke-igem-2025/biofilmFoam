@@ -41,7 +41,7 @@ fvScalarMatrix NEqn
     + fvm::Sp(mu*C/(k_1+C), N)
     - fvm::Sp(k_4, N)
     - fvm::Sp(eta2*M/(k5+M), N)
-    
+    +eps_disp_death*max(scalar(0), (E_crit - E)/E_crit) * switchField*M
 );
 
 solve(NEqn);
