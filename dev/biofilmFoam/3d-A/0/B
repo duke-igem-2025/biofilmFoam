@@ -9,59 +9,46 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       dictionary;
-    location    "constant";
-    object      transportProperties;
+    class       volScalarField;
+    object      B;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-d1    1.6e-09;
+dimensions      [0 -3 0 0 1 0 0];
 
-mmax  40;
+internalField   uniform 0;
 
-c0    2e-03;
+boundaryField
+{
+  x0
+    {
+      type zeroGradient;
+    }
+  
+  x1
+    {
+      type zeroGradient;
+    }
 
-mum   1.5e-05;
+  y0
+    {
+      type empty;
+    }
+  
+  y1
+    {
+      type empty;
+    }
+  
+  z0
+    {
+      type zeroGradient;
+    }
 
-Yxs   0.045;
-
-ms    3e-05;
-
-Ks    1.5e-05;
-
-eps   1.157407407e-17;
-
-a     4;
-
-b     4;
-
-
-mu 0.00006944444444;
-Y 0.63;
-k_1 4.0;
-k_4 0.00000462962963;
-M_inf 1e04;
-
-
-alpha 0.000006388888889;
-beta 0.00006388888889;
-
-// alpha 0;
-// beta 0;
-
-n 2.5;
-tau 40e-09; // nm
-
-eta1 0.0000474537037;
-eta2 0.00002430555556;
-k5 0.7;
-
-E_threshold 0.1;
-
-E_crit 0.2;
-eps_disp_death 0.0001289944444;
-
-D_enzyme 1;
-// D_enzyme 0;
+  z1
+    {
+      type zeroGradient;
+    }
+}
 
 // ************************************************************************* //

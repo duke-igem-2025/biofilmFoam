@@ -23,10 +23,10 @@ startFrom         latestTime;
 
 stopAt            endTime;
 
-endTime           3456000; // 643h
+// endTime           3456000; // 643h
 
-// endTime           864000; // 643h
-// endTime           432000; // 643h
+endTime           864000; // 6431h
+// endTime           216000; // 643h
 
 deltaT            5e-9;
 

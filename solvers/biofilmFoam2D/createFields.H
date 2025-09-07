@@ -81,6 +81,21 @@ volScalarField E
 
 dimensionedScalar ddtE("ddtE", dimensionSet(0,0,0,0,0), 0.);
 
+volScalarField B
+(
+    IOobject
+    (
+	"B",
+	runTime.timeName(),
+	mesh,
+	IOobject::MUST_READ,
+	IOobject::AUTO_WRITE
+    ),
+    mesh
+);
+
+dimensionedScalar ddtB("ddtB", dimensionSet(0,0,0,0,0), 0.);
+
 // --- transportProperties
 
 Info << "Reading transportProperties\n" << endl;
@@ -166,8 +181,8 @@ dimensionedScalar gamma_EPS_deg(
 
 dimensionedScalar eps_disp(
     "eps_disp",
-    dimensionSet(0, 0, -1, 0, 0, 0, 0),  // 1/time (adjust if E has other base dims)
-   0.000001736111111                                // value in 1/s (or 1/your_time_unit)
+    dimensionSet(0, 3, -1, 0, -1, 0, 0),  // 1/time (adjust if E has other base dims)
+   0.000001736111111   * 1000                             // value in 1/s (or 1/your_time_unit)
 );
 
 dimensionedScalar M_deg_eps(
@@ -227,6 +242,70 @@ volScalarField biofilmPhase
     dimensionedScalar ("biofilmPhase", dimensionSet(0,0,0,0,0), 0.),
     "zeroGradient"
 );
+
+
+// For B
+// New mask field for production restriction
+volScalarField regionMask
+(
+    IOobject
+    (
+        "regionMask",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::NO_WRITE
+    ),
+    mesh,
+    dimensionedScalar("zero", dimless, 0.0) // initialize all to 0
+);
+
+// =============================================================
+// Randomly assign ~10 patches of 2x2 cells in the upper half
+// =============================================================
+
+#include "Random.H"
+
+// Set seed for reproducibility
+unsigned int seed = 12345;
+srand(seed);
+
+int numBlocks = 10;
+
+const vectorField& C_ = mesh.C(); // cell centers
+
+
+scalar zMid = 0.3 * (gMax(C_).z() + gMin(C_).z()); // midpoint in z-direction
+
+scalar dx = (gMax(C_).x() - gMin(C_).x()) / std::cbrt(mesh.nCells());
+scalar dz = (gMax(C_).z() - gMin(C_).z()) / std::cbrt(mesh.nCells());
+
+for (int b = 0; b < numBlocks; b++)
+{
+    int randCell = rand() % mesh.nCells();
+
+    // ensure it’s in the upper half along z
+    if (C_[randCell].z() < zMid)
+    {
+        b--; // retry if not in upper half
+        continue;
+    }
+
+    // mark 2x2 block: all cells within dx, dz of the chosen anchor
+    forAll(C_, cellI)
+    {
+        if (mag(C_[cellI].x() - C_[randCell].x()) <= dx
+         && mag(C_[cellI].z() - C_[randCell].z()) <= dz)
+        {
+            regionMask[cellI] = 1.0;
+        }
+    }
+}
+
+regionMask.write();
+
+
+// End B
 
 // --- file biofilmVolume.dat
 

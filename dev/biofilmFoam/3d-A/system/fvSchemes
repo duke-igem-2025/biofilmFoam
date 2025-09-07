@@ -38,6 +38,7 @@ laplacianSchemes
   laplacian(Da,A) Gauss linear orthogonal;
   laplacian(Dn,N) Gauss linear orthogonal;
   laplacian(De,E) Gauss linear orthogonal;
+  laplacian(Db,B) Gauss linear orthogonal;
 }
 
 interpolationSchemes
