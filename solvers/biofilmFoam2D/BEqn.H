@@ -7,13 +7,13 @@ dimensionedScalar Db_bulk (
 dimensionedScalar Db_biofilm (
     "Db_biofilm",
     dimensionSet(0, 2, -1, 0, 0, 0, 0),
-    0.0000039 / 86400 
+    0.0000000039 / 86400 
 );
 
 dimensionedScalar prod_enzyme (
     "prod_enzyme",
     dimensionSet(0, 0, -1, 0, 0, 0, 0),
-    100
+    1000
 );
 
 

@@ -26,14 +26,14 @@ stopAt            endTime;
 // endTime           3456000; // 643h
 
 endTime           864000; // 6431h
-// endTime           216000; // 643h
+// endTime           250000; // 643h
 
 deltaT            5e-9;
 
 writeControl      adjustableRunTime;
 
 // writeInterval     5000;
-writeInterval     25000;
+writeInterval     10000;
 
 purgeWrite        0;
 
