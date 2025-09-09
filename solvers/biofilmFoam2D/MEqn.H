@@ -28,8 +28,8 @@ volScalarField switchField
 // fill cell by cell
 forAll(ddtE_field, cellI)
 {
-    if (ddtE_field[cellI] >= 0.0)
-        switchField[cellI] = 1.0; // dimensionless
+    // if (ddtE_field[cellI] < -1.0e-10) // if E is decreasing
+    switchField[cellI] = 1.0; // dimensionless
 }
 
 

@@ -21,7 +21,7 @@ dimensionedScalar D_biofilm (
     0.00008 / 86400     // m^2/day in biofilm
 );
 
-volScalarField Mtot = M+N+E;       // non dimensional
+volScalarField Mtot = M+N+E/2;       // non dimensional
 
 // --- 3) Build a tmp<volScalarField> for the spatial D field ---
 tmp<volScalarField> Dtmp = D_bulk*(1.0 - Mtot) + D_biofilm*Mtot;

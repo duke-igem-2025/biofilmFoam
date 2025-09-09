@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
         mesh
     );
 
-    scalar tau = 10e-9; // You can also read this from a dictionary if needed
+    scalar tau = 40e-9;
 
     volScalarField A_dimless
     (

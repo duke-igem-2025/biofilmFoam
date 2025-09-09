@@ -16,13 +16,14 @@ FoamFile
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 defaultFieldValues ( volScalarFieldValue M 0 );
+defaultFieldValues ( volScalarFieldValue E 0 );
 
 regions
 (
 
  cellToCell {
    set inoculum;
-   fieldValues ( volScalarFieldValue M 0.3 );
+   fieldValues ( volScalarFieldValue M 0.3 volScalarFieldValue E 0.2);
  }
  
 
