@@ -259,7 +259,7 @@ volScalarField regionMask
         runTime.timeName(),
         mesh,
         IOobject::NO_READ,
-        IOobject::NO_WRITE
+        IOobject::AUTO_WRITE
     ),
     mesh,
     dimensionedScalar("zero", dimless, 0.0) // initialize all to 0
@@ -275,38 +275,41 @@ int numBlocks = 10;
 const vectorField& C_ = mesh.C(); // cell centers
 
 // Characteristic spacing
-scalar dx = (gMax(C_).x() - gMin(C_).x()) / std::cbrt(mesh.nCells());
-scalar dz = (gMax(C_).z() - gMin(C_).z()) / std::cbrt(mesh.nCells());
+
+
 
 // Floor tolerance along y
 scalar yMin = gMin(C_).y();
-scalar yTol = 0.5 * dx;   // half-cell tolerance
+scalar yTol  = 0.5 * (1.89e-6);   // floor tolerance ≈ half y-cell
 
 // Access M
+scalar dxCell = 0.004 / 120;
+scalar dzCell = 0.00189 / 120;
 
 for (int b = 0; b < numBlocks; b++)
 {
     int randCell = rand() % mesh.nCells();
 
-    // ensure it’s on the floor (y direction) and M == 0
-    if (C_[randCell].y() > yMin + yTol || M[randCell] > SMALL)
+    // Ensure it is on floor (z = 0) and M == 0
+    if (C_[randCell].z() > dzCell/2 || M[randCell] > SMALL)
     {
-        b--; // retry
+        b--;
         continue;
     }
 
-    // mark 2x2 block: all floor cells within dx,dz of the chosen anchor
+    // mark 2x2 block in x-y plane (floor)
     forAll(C_, cellI)
     {
-        if (mag(C_[cellI].x() - C_[randCell].x()) <= dx
-         && mag(C_[cellI].z() - C_[randCell].z()) <= dz
-         && C_[cellI].y() <= yMin + yTol
+        if (fabs(C_[cellI].x() - C_[randCell].x()) <= 2*dxCell
+         && fabs(C_[cellI].y() - C_[randCell].y()) <= 1e-12 // only single y-cell
+         && C_[cellI].z() <= dzCell*2
          && M[cellI] <= SMALL)
         {
             regionMask[cellI] = 1.0;
         }
     }
 }
+
 
 regionMask.write();
 

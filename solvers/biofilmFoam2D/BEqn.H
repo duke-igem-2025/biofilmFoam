@@ -13,7 +13,7 @@ dimensionedScalar Db_biofilm (
 dimensionedScalar prod_enzyme (
     "prod_enzyme",
     dimensionSet(0, 0, -1, 0, 0, 0, 0),
-    1000
+    10000
 );
 
 
