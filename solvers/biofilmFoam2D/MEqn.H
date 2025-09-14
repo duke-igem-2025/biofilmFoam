@@ -25,10 +25,12 @@ volScalarField switchField
     dimensionedScalar("zero", dimless, 0.0) // initialize to 0
 );
 
+scalar t = runTime.value();
+
 // fill cell by cell
 forAll(ddtE_field, cellI)
 {
-    // if (ddtE_field[cellI] < -1.0e-10) // if E is decreasing
+    // if (ddtE_field[cellI] < -1.0e-6 && t>5000) // if E is decreasing
     switchField[cellI] = 1.0; // dimensionless
 }
 

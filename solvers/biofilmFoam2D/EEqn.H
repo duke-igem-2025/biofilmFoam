@@ -65,7 +65,7 @@ fvScalarMatrix EEqn
     // (ddtM)*gamma_EPS_prod*M
     gamma_EPS_deg * M * (C/(k_1 + C))
     - k_deg * E
-    - fvm::Sp(k_orphan*max(scalar(0), E_threshold - M), E)
+    // - fvm::Sp(k_orphan*max(scalar(0), E_threshold - M), E)
     - fvm::Sp(eps_disp*B, E)
 );
 

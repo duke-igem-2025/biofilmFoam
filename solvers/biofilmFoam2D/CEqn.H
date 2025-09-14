@@ -21,7 +21,7 @@ dimensionedScalar D_biofilm (
     0.00008 / 86400     // m^2/day in biofilm
 );
 
-volScalarField Mtot = M+N+E/2;       // non dimensional
+volScalarField Mtot = M+N;       // non dimensional
 
 // --- 3) Build a tmp<volScalarField> for the spatial D field ---
 tmp<volScalarField> Dtmp = D_bulk*(1.0 - Mtot) + D_biofilm*Mtot;
@@ -41,7 +41,8 @@ volScalarField D
 );
 
 // --- 5) Build the consumption rate parameter Rmax ---
-dimensionedScalar Rmax = mu*M_inf/Y;  // [g/m^3/day]
+dimensionedScalar Rmax_m = mu*M_inf/Y;  // [g/m^3/day]
+dimensionedScalar Rmax_e = mu_e*E_inf/Y_e;  // [g/m^3/day]
 
 // --- 6) Finally, your C‑equation ---
 fvScalarMatrix CEqn
@@ -49,7 +50,7 @@ fvScalarMatrix CEqn
     fvm::ddt(C)
   - fvm::laplacian(D, C)
   ==
-    - fvm::Sp( Rmax * Mtot/(k_1 + C), C )
+    - fvm::Sp( Rmax_m * Mtot/(k_1 + C)+Rmax_e * E/(k_1 + C), C )
 );
 
 solve(CEqn);

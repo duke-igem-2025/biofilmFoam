@@ -149,10 +149,15 @@ dimensionedScalar mu ("mu", dimensionSet(0, 0, -1, 0, 0, 0, 0), transportPropert
 
 dimensionedScalar Y ("Y", dimensionSet(0, 0, 0, 0, 0, 0, 0), transportProperties);
 
+dimensionedScalar mu_e ("mu_e", dimensionSet(0, 0, -1, 0, 0, 0, 0), transportProperties);
+
+dimensionedScalar Y_e ("Y_e", dimensionSet(0, 0, 0, 0, 0, 0, 0), transportProperties);
+
 dimensionedScalar k_1 ("k_1", dimensionSet(1, -3, 0, 0, 0, 0, 0), transportProperties);
 
 dimensionedScalar k_4 ("k_4", dimensionSet(0, 0, -1, 0, 0, 0, 0), transportProperties);
 dimensionedScalar M_inf ("M_inf", dimensionSet(1, -3, 0, 0, 0, 0, 0), transportProperties);
+dimensionedScalar E_inf ("E_inf", dimensionSet(1, -3, 0, 0, 0, 0, 0), transportProperties);
 
 
 dimensionedScalar alpha ("alpha", dimensionSet(-1, 0, -1, 0, 1, 0, 0), transportProperties);
@@ -176,7 +181,7 @@ dimensionedScalar gamma_EPS_prod(
 dimensionedScalar gamma_EPS_deg(
     "gamma_EPS_prod",
     dimensionSet(0, 0, -1, 0, 0, 0, 0),  // 1/time (adjust if E has other base dims)
-    0.00003472222222 / 3                               // value in 1/s (or 1/your_time_unit)
+    0.00003472222222 / 3                              // value in 1/s (or 1/your_time_unit)
 );
 
 dimensionedScalar eps_disp(
@@ -260,42 +265,43 @@ volScalarField regionMask
     dimensionedScalar("zero", dimless, 0.0) // initialize all to 0
 );
 
-// =============================================================
-// Randomly assign ~10 patches of 2x2 cells in the upper half
-// =============================================================
-
 #include "Random.H"
 
-// Set seed for reproducibility
-unsigned int seed = 12345;
+unsigned int seed = 42;
 srand(seed);
 
 int numBlocks = 10;
 
 const vectorField& C_ = mesh.C(); // cell centers
 
-
-scalar zMid = 0.3 * (gMax(C_).z() + gMin(C_).z()); // midpoint in z-direction
-
+// Characteristic spacing
 scalar dx = (gMax(C_).x() - gMin(C_).x()) / std::cbrt(mesh.nCells());
 scalar dz = (gMax(C_).z() - gMin(C_).z()) / std::cbrt(mesh.nCells());
+
+// Floor tolerance along y
+scalar yMin = gMin(C_).y();
+scalar yTol = 0.5 * dx;   // half-cell tolerance
+
+// Access M
 
 for (int b = 0; b < numBlocks; b++)
 {
     int randCell = rand() % mesh.nCells();
 
-    // ensure it’s in the upper half along z
-    if (C_[randCell].z() < zMid)
+    // ensure it’s on the floor (y direction) and M == 0
+    if (C_[randCell].y() > yMin + yTol || M[randCell] > SMALL)
     {
-        b--; // retry if not in upper half
+        b--; // retry
         continue;
     }
 
-    // mark 2x2 block: all cells within dx, dz of the chosen anchor
+    // mark 2x2 block: all floor cells within dx,dz of the chosen anchor
     forAll(C_, cellI)
     {
         if (mag(C_[cellI].x() - C_[randCell].x()) <= dx
-         && mag(C_[cellI].z() - C_[randCell].z()) <= dz)
+         && mag(C_[cellI].z() - C_[randCell].z()) <= dz
+         && C_[cellI].y() <= yMin + yTol
+         && M[cellI] <= SMALL)
         {
             regionMask[cellI] = 1.0;
         }
@@ -303,7 +309,6 @@ for (int b = 0; b < numBlocks; b++)
 }
 
 regionMask.write();
-
 
 // End B
 
