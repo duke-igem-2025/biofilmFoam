@@ -186,7 +186,7 @@ dimensionedScalar gamma_EPS_deg(
 
 dimensionedScalar eps_disp(
     "eps_disp",
-    dimensionSet(0, 3, -1, 0, -1, 0, 0),  // 1/time (adjust if E has other base dims)
+    dimensionSet(0, 0, -1, 0, 0, 0, 0),  // 1/time (adjust if E has other base dims)
    0.000001736111111   * 5000                             // value in 1/s (or 1/your_time_unit)
 );
 
@@ -314,6 +314,26 @@ for (int b = 0; b < numBlocks; b++)
 regionMask.write();
 
 // End B
+dimensionedScalar alpha_lux ("alpha_lux", dimensionSet(0, 0, -1, 0, 0, 0, 0), transportProperties);
+dimensionedScalar beta_lux ("beta_lux", dimensionSet(0, 0, -1, 0, 0, 0, 0), transportProperties);
+
+dimensionedScalar K_lux ("K_lux", dimensionSet(0, -3, 0, 0, 1, 0, 0), transportProperties);
+
+dimensionedScalar gamma_I ("gamma_I", dimensionSet(0, 0, -1, 0, 0, 0, 0), transportProperties);
+dimensionedScalar K_1 ("K_1", dimensionSet(0, 3, 0, 0, -1, 0, 0), transportProperties);
+
+dimensionedScalar K_I ("K_I", dimensionSet(0, 0, -1, 0, 0, 0, 0), transportProperties);
+
+dimensionedScalar gamma_Ie ("gamma_Ie", dimensionSet(0, 0, -1, 0, 0, 0, 0), transportProperties);
+
+dimensionedScalar epsilon ("epsilon", dimensionSet(0, -3, 0, 0, 1, 0, 0), transportProperties);
+
+
+dimensionedScalar R2_TOT ("R2_TOT", dimensionSet(0, -3, 0, 0, 1, 0, 0), transportProperties);
+
+
+// Dispersin variables and code
+
 
 // --- file biofilmVolume.dat
 

@@ -15,6 +15,20 @@ dimensionedScalar prod_enzyme (
     dimensionSet(0, 0, -1, 0, 0, 0, 0),
     10000
 );
+Info << "Dhi " << prod_enzyme.dimensions() << endl;
+
+
+tmp<volScalarField> Q2 =
+    (K_1*K_1/4 * A*A * R2_TOT) / (1.0+K_1 * A + K_1*K_1/4 *A*A+ SMALL);
+
+Info << "K_lux dims: " << K_lux.dimensions() << endl;
+Info << "Q2 dims: " << Q2().dimensions() << endl;
+Info << "1.0 dims (plain double) is dimless" << endl;
+// Info << "Denominator dims: " << (dimensionedScalar("one", dimless, 1.0) + (K_lux/(Q2))).dimensions() << endl;
+
+
+// Info << "Dimension of Q2: " << Q2().dimensions() << endl;
+
 
 
 tmp<volScalarField> Dbtmp = Db_bulk*(1.0 - M) + Db_biofilm*M;
@@ -60,10 +74,14 @@ forAll(M, cellI)
 fvScalarMatrix BEqn
 (
     fvm::ddt(B)
-  - fvm::laplacian(Db, B)
+//   - fvm::laplacian(Db, B)
   ==
-    prod_enzyme * A * switchField_B * regionMask * D_enzyme
+    // prod_enzyme * A * switchField_B * regionMask * D_enzyme
+    (beta_lux + ((alpha_lux - beta_lux)/(1.0+(K_lux / (Q2 + epsilon)))) - gamma_I * B - K_I * B) * regionMask * D_enzyme
     // 0
+    // (beta_lux + (alpha_lux - beta_lux)) * regionMask * D_enzyme
+    //
+
 );
 
 solve(BEqn);
