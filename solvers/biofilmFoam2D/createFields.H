@@ -96,6 +96,21 @@ volScalarField B
 
 dimensionedScalar ddtB("ddtB", dimensionSet(0,0,0,0,0), 0.);
 
+volScalarField Be
+(
+    IOobject
+    (
+        "Be",
+        runTime.timeName(),
+        mesh,
+        IOobject::MUST_READ,
+        IOobject::AUTO_WRITE
+    ),
+    mesh
+);
+
+dimensionedScalar ddtBe("ddtBe", dimensionSet(0,0,0,0,0), 0.);
+
 // --- transportProperties
 
 Info << "Reading transportProperties\n" << endl;
@@ -187,7 +202,7 @@ dimensionedScalar gamma_EPS_deg(
 dimensionedScalar eps_disp(
     "eps_disp",
     dimensionSet(0, 0, -1, 0, 0, 0, 0),  // 1/time (adjust if E has other base dims)
-   0.000001736111111   * 5000                             // value in 1/s (or 1/your_time_unit)
+   0.00003472222222 * 2                               // value in 1/s (or 1/your_time_unit)
 );
 
 dimensionedScalar M_deg_eps(

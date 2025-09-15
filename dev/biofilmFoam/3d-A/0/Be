@@ -9,49 +9,46 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       dictionary;
-    location    "system";
-    object      fvSchemes;
+    class       volScalarField;
+    object      B;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-ddtSchemes
-{
-  default         backward;
-}
+dimensions      [0 0 0 0 0 0 0];
 
-gradSchemes
-{
-  default         Gauss linear;
-}
+internalField   uniform 0;
 
-divSchemes
+boundaryField
 {
-  default         none;
-}
+  x0
+    {
+      type zeroGradient;
+    }
+  
+  x1
+    {
+      type zeroGradient;
+    }
 
-laplacianSchemes
-{
-  default         none;
-  laplacian(D,C) Gauss linear orthogonal;
-  laplacian(d2,M) Gauss linear orthogonal;
-  laplacian(Da,A) Gauss linear orthogonal;
-  laplacian(Dn,N) Gauss linear orthogonal;
-  laplacian(De,E) Gauss linear orthogonal;
-  laplacian(Db,B) Gauss linear orthogonal;
-  laplacian(Dbe,Be) Gauss linear orthogonal;
-}
+  y0
+    {
+      type empty;
+    }
+  
+  y1
+    {
+      type empty;
+    }
+  
+  z0
+    {
+      type zeroGradient;
+    }
 
-interpolationSchemes
-{
-  default         none;
-  d2              linear;
+  z1
+    {
+      type zeroGradient;
+    }
 }
-
-snGradSchemes
-{
-  default         orthogonal;
-}
-
 
 // ************************************************************************* //

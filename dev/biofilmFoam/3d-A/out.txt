@@ -1,0 +1,11 @@
+wmake libraries/numericalMethods
+wmake libraries/parabolicVelocity
+wmake solvers/biofilmFoam2D
+Making dependencies: biofilmFoam2D.C
+g++ -std=c++14 -m64 -pthread -DOPENFOAM=2406 -DWM_DP -DWM_LABEL_SIZE=32 -Wall -Wextra -Wold-style-cast -Wnon-virtual-dtor -Wno-unused-parameter -Wno-invalid-offsetof -Wno-attributes -Wno-unknown-pragmas -O3  -DNoRepository -ftemplate-depth-100  -I/usr/lib/openfoam/openfoam2406/src/finiteVolume/lnInclude -I/usr/lib/openfoam/openfoam2406/src/meshTools/lnInclude -I../../libraries/numericalMethods/lnInclude -iquote. -IlnInclude -I/usr/lib/openfoam/openfoam2406/src/OpenFOAM/lnInclude -I/usr/lib/openfoam/openfoam2406/src/OSspecific/POSIX/lnInclude   -fPIC -c biofilmFoam2D.C -o Make/linux64GccDPInt32Opt/biofilmFoam2D.o
+wmake utilities/biomass
+wmake utilities/sessileBiomass
+wmake utilities/eps
+wmake utilities/autoinducer
+wmake utilities/inoculumGenerator
+wmake utilities/permeability
