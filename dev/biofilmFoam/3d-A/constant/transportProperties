@@ -64,8 +64,8 @@ E_threshold 0.1;
 E_crit 0.2;
 eps_disp_death 0.0001289944444;
 
-D_enzyme 1;
-// D_enzyme 0;
+// D_enzyme 1;
+D_enzyme 0;
 
 alpha_lux 0.08316666667;
 beta_lux 0.001330666667;
