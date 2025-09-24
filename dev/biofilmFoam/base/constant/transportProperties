@@ -46,11 +46,11 @@ M_inf 3e03;
 E_inf 7e03;
 
 
-// alpha 0.000006388888889;
-// beta 0.00006388888889;
+alpha 0.000006388888889;
+beta 0.00006388888889;
 
-alpha 0;
-beta 0;
+// alpha 0;
+// beta 0;
 
 n 2.5;
 tau 40e-09; // nm
@@ -62,10 +62,10 @@ k5 0.7;
 E_threshold 0.1;
 
 E_crit 0.2;
-eps_disp_death 0.0001289944444;
+eps_disp_death 0.00006944444444; //0.0001289944444;
 
-// D_enzyme 1;
-D_enzyme 0;
+D_enzyme 1;
+// D_enzyme 0;
 
 alpha_lux 0.08316666667;
 beta_lux 0.001330666667;

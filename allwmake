@@ -13,8 +13,10 @@ wmake libraries/parabolicVelocity
 wmake solvers/biofilmFoam2D
 
 wmake utilities/biomass
+wmake utilities/biomass_max
 wmake utilities/sessileBiomass
 wmake utilities/eps
+wmake utilities/eps_max
 wmake utilities/autoinducer
 wmake utilities/inoculumGenerator
 wmake utilities/permeability
