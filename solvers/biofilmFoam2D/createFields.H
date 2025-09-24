@@ -187,38 +187,16 @@ dimensionedScalar eta2 ("eta2", dimensionSet(0, 0, -1, 0, 0, 0, 0), transportPro
 
 dimensionedScalar k5 ("k5", dimensionSet(0, 0, 0, 0, 0, 0, 0), transportProperties);
 
-dimensionedScalar gamma_EPS_prod(
-    "gamma_EPS_prod",
-    dimensionSet(0, 0, -1, 0, 0, 0, 0),  // 1/time (adjust if E has other base dims)
-    1e4  / 86400                                  // value in 1/s (or 1/your_time_unit)
-);
+dimensionedScalar gamma_EPS_prod("gamma_EPS_prod", dimensionSet(0, 0, -1, 0, 0, 0, 0), transportProperties);
 
-dimensionedScalar gamma_EPS_deg(
-    "gamma_EPS_prod",
-    dimensionSet(0, 0, -1, 0, 0, 0, 0),  // 1/time (adjust if E has other base dims)
-    0.00003472222222 / 3                              // value in 1/s (or 1/your_time_unit)
-);
-
-dimensionedScalar eps_disp(
-    "eps_disp",
-    dimensionSet(0, 0, -1, 0, 0, 0, 0),  // 1/time (adjust if E has other base dims)
-   0.00003472222222 * 2                               // value in 1/s (or 1/your_time_unit)
-);
-
-dimensionedScalar M_deg_eps(
-    "M_deg_eps",
-    dimensionSet(0, 0, -1, 0, 0, 0, 0),  // 1/time (adjust if E has other base dims)
-    1                           // value in 1/s (or 1/your_time_unit)
-);
+dimensionedScalar eps_disp("eps_disp", dimensionSet(0, 0, -1, 0, 0, 0, 0), transportProperties);
 
 dimensionedScalar E_threshold ("E_threshold", dimensionSet(0, 0, 0, 0, 0, 0, 0), transportProperties);
 dimensionedScalar E_crit ("E_crit", dimensionSet(0, 0, 0, 0, 0, 0, 0), transportProperties);
 
-dimensionedScalar eps_disp_death(
-    "eps_disp_death",
-    dimensionSet(0, 0, -1, 0, 0, 0, 0),  // 1/time (adjust if E has other base dims)
-    transportProperties                                 // value in 1/s (or 1/your_time_unit)
-);
+dimensionedScalar k_deg ("k_deg", dimensionSet(0, 0, -1, 0, 0, 0, 0), transportProperties);
+
+dimensionedScalar eps_disp_death("eps_disp_death", dimensionSet(0, 0, -1, 0, 0, 0, 0), transportProperties);
 
 dimensionedScalar D_enzyme ("D_enzyme", dimensionSet(0, 0, 0, 0, 0, 0, 0), transportProperties);
 

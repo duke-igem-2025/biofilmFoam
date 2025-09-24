@@ -12,7 +12,7 @@ dimensionedScalar Da_biofilm (
 dimensionedScalar gamma (
     "gamma",
     dimensionSet(0, 0 , 0, 0, 0, 0, 0),
-    1e-09  // nm 
+    1e-08  // nm 
 );
 
 

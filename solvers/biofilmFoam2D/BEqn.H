@@ -10,13 +10,6 @@ dimensionedScalar Db_biofilm (
     0.0000000039 / 86400 
 );
 
-dimensionedScalar prod_enzyme (
-    "prod_enzyme",
-    dimensionSet(0, 0, -1, 0, 0, 0, 0),
-    10000
-);
-Info << "Dhi " << prod_enzyme.dimensions() << endl;
-
 
 tmp<volScalarField> Q2 =
     (K_1*K_1/4 * A*A * R2_TOT) / (1.0+K_1 * A + K_1*K_1/4 *A*A+ SMALL);
@@ -74,14 +67,8 @@ forAll(M, cellI)
 fvScalarMatrix BEqn
 (
     fvm::ddt(B)
-//   - fvm::laplacian(Db, B)
   ==
-    // prod_enzyme * A * switchField_B * regionMask * D_enzyme
     (beta_lux + ((alpha_lux - beta_lux)/(1.0+(K_lux / (Q2 + epsilon)))) - gamma_I * B - K_I * B) * regionMask * D_enzyme
-    // 0
-    // (beta_lux + (alpha_lux - beta_lux)) * regionMask * D_enzyme
-    //
-
 );
 
 solve(BEqn);
