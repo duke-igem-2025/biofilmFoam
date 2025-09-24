@@ -1,16 +1,25 @@
 import subprocess
 import shutil
 from pathlib import Path
+import re
 
-# Base case directory
+# --- CONFIG ---
+# Singularity container path
+container = "../openfoam.sif"
+
+# Directory inside the container where code runs
+workdir = "/home/openfoam/biofilmFoam/dev/biofilmFoam"
+
+# Base case directory (host side!)
 base_dir = Path("base")
 results_dir = Path("scan_results")
 results_dir.mkdir(exist_ok=True)
 
-# Example scan: E_crit and E
+# Parameter scan example: E_crit and E
 param = "E_crit"
 values = [0.1, 0.2, 0.3]
 
+# --- HELPERS ---
 def modify_transport_file(case_dir, param, value):
     """Edit transportProperties inside the given case directory."""
     transport_file = case_dir / "constant" / "transportProperties"
@@ -27,17 +36,26 @@ def modify_setfields_file(case_dir, value):
     """Edit setFieldsDict to update the initial value of E."""
     setfields_file = case_dir / "system" / "setFieldsDict"
     text = setfields_file.read_text()
-
-    # Replace `volScalarFieldValue E <number>` with the new value
-    import re
     new_text = re.sub(
         r"(volScalarFieldValue\s+E\s+)[0-9.eE+-]+",
-        rf"\g<1>{value}",
+        rf"\1{value}",
         text
     )
-
     setfields_file.write_text(new_text)
 
+def run_in_container(cmd, cwd):
+    """Run a command inside the singularity container at given host cwd."""
+    subprocess.run(
+        [
+            "singularity", "exec",
+            "--bind", f"{Path.cwd()}:{workdir}",
+            container,
+            "bash", "-c", f"cd {workdir}/{cwd} && {cmd}"
+        ],
+        check=True
+    )
+
+# --- MAIN LOOP ---
 for v in values:
     case_name = f"{param}_{v}"
     case_dir = Path(case_name)
@@ -49,31 +67,28 @@ for v in values:
         shutil.rmtree(case_dir)
     shutil.copytree(base_dir, case_dir)
 
-    # Modify transportProperties
+    # Modify input files
     modify_transport_file(case_dir, param, v)
-
-    # If scanning E_crit, also update E in setFieldsDict
     if param == "E_crit":
-        modify_setfields_file(case_dir, param, v)
+        modify_setfields_file(case_dir, v)
 
-    # Run simulation in the case directory
-    subprocess.run(["./clean"], cwd=case_dir, check=True)
-    subprocess.run(["./run"], cwd=case_dir, check=True)
+    # Run simulation inside container
+    run_in_container("./clean", case_name)
+    run_in_container("./run", case_name)
 
-    # Run data extraction commands
+    # Run postprocessing inside container
     for cmd in ["biomass", "sessileBiomass", "autoinducer", "eps", "eps_max", "biomass_max"]:
-        subprocess.run([f"./{cmd}"], cwd=case_dir, check=True)
+        run_in_container(f"./{cmd}", case_name)
 
     # Save results
     run_dir = results_dir / case_name
     run_dir.mkdir(exist_ok=True)
-
     for fname in ["biomass.dat", "sessileBiomass.dat", "autoinducer.dat", "eps.dat"]:
         f = case_dir / fname
         if f.exists():
             shutil.move(str(f), run_dir / f.name)
 
-    # Delete case directory to save space
+    # Clean up
     shutil.rmtree(case_dir)
 
 print("\n✅ All scans completed!")
