@@ -18,24 +18,38 @@ params = {
     "E_crit": sorted(list(np.round(np.linspace(0.0, 0.8, 9), 1)) + [0.15, 0.05]),
     "eps_disp": list(np.round(np.linspace(0.0, 0.00006944444444*2, 12), 14)),
     "gamma_eps_prod": list(np.round(np.linspace(0.0, 0.00006944444444*2, 12), 14)),
-    "M_b": [0, 0.25, 0.5, 1, 1.5, 2],
+    "M_b": [0, 2.5, 5, 10, 15, 20],
     "eps_disp_death": list(np.round(np.linspace(0.0, 0.00006944444444*2, 12), 14)),
     "mu": list(np.round(np.linspace(0.0, 0.00006944444444*2, 12), 14)),
     "tau": list(np.round(np.linspace(10e-09, 70e-09, 7), 14)),
     "D_enzyme": [0, 1]
 }
 
+params = {
+    "tau": list(np.round(np.linspace(10e-09, 70e-09, 7), 14)),
+}
+
 # --- HELPERS ---
+import re
+
 def modify_transport_file(case_dir, param, value):
     transport_file = case_dir / "constant" / "transportProperties"
     lines = transport_file.read_text().splitlines()
     new_lines = []
+
+    # Regex: matches start of line (ignoring spaces), then exact param, then whitespace
+    pattern = re.compile(rf"^\s*{re.escape(param)}\b")
+
     for line in lines:
-        if line.strip().startswith(param):
-            new_lines.append(f"{param}\t{value};")
+        if pattern.match(line):
+            # Preserve indentation
+            indent = re.match(r"^\s*", line).group(0)
+            new_lines.append(f"{indent}{param}\t{value};")
         else:
             new_lines.append(line)
+
     transport_file.write_text("\n".join(new_lines) + "\n")
+
 
 def modify_setfields_file(case_dir, value):
     setfields_file = case_dir / "system" / "setFieldsDict"
@@ -82,7 +96,7 @@ def run_case(args):
     run_in_container("./run", case_name)
 
     # Run postprocessing inside container
-    for cmd in ["biomass", "sessileBiomass", "autoinducer", "eps", "eps_max", "biomass_max"]:
+    for cmd in ["biomass", "sessileBiomass", "autoinducer", "eps", "eps_max", "biomass_max", "enzyme"]:
         run_in_container(cmd, case_name)
 
     # Save results
