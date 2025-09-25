@@ -42,7 +42,7 @@ volScalarField D
 
 // --- 5) Build the consumption rate parameter Rmax ---
 dimensionedScalar Rmax_m = mu*M_inf/Y;  // [g/m^3/day]
-dimensionedScalar Rmax_e = mu_e*E_inf/Y_e;  // [g/m^3/day]
+dimensionedScalar Rmax_e = gamma_EPS_prod*E_inf/Y_e;  // [g/m^3/day]
 
 // --- 6) Finally, your C‑equation ---
 fvScalarMatrix CEqn

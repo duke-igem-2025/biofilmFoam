@@ -32,7 +32,7 @@ fvScalarMatrix BeEqn
     fvm::ddt(Be)
   - fvm::laplacian(Dbe, Be)
   ==
-    K_I * B
+    M_b * K_I * B
     - fvm::Sp( gamma_Ie, Be)
 );
 

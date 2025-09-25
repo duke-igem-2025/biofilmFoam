@@ -18,5 +18,6 @@ wmake utilities/sessileBiomass
 wmake utilities/eps
 wmake utilities/eps_max
 wmake utilities/autoinducer
+wmake utilities/enzyme
 wmake utilities/inoculumGenerator
 wmake utilities/permeability

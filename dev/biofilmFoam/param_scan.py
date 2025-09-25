@@ -4,6 +4,7 @@ from pathlib import Path
 import re
 import multiprocessing as mp
 import sys
+import numpy as np
 
 # --- CONFIG ---
 container = "/hpc/group/bassigem/openfoam.sif"
@@ -14,7 +15,14 @@ results_dir.mkdir(exist_ok=True)
 
 # Parameter scan
 params = {
-    "E_crit": [0.1, 0.2, 0.3],
+    "E_crit": sorted(list(np.round(np.linspace(0.0, 0.8, 9), 1)) + [0.15, 0.05]),
+    "eps_disp": list(np.round(np.linspace(0.0, 0.00006944444444*2, 12), 14)),
+    "gamma_eps_prod": list(np.round(np.linspace(0.0, 0.00006944444444*2, 12), 14)),
+    "M_b": [0, 0.25, 0.5, 1, 1.5, 2],
+    "eps_disp_death": list(np.round(np.linspace(0.0, 0.00006944444444*2, 12), 14)),
+    "mu": list(np.round(np.linspace(0.0, 0.00006944444444*2, 12), 14)),
+    "tau": list(np.round(np.linspace(10e-09, 70e-09, 7), 14)),
+    "D_enzyme": [0, 1]
 }
 
 # --- HELPERS ---
