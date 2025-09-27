@@ -16,3 +16,5 @@ build/
 _static/
 _templates/
 .vscode/
+scan_results/
+scan_results_enzyme/

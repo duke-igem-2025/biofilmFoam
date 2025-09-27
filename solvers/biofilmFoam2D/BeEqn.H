@@ -10,7 +10,7 @@ dimensionedScalar Dbe_biofilm (
     0.0000000039 / 86400 
 );
 
-tmp<volScalarField> Dbetmp = Dbe_bulk*(1.0 - M) + Dbe_biofilm*M;
+tmp<volScalarField> Dbetmp = Dbe_bulk*(1.0 - 0.3*M-0.7*E) + Dbe_biofilm*(0.3*M-0.7*E);
 
 volScalarField Dbe
 (

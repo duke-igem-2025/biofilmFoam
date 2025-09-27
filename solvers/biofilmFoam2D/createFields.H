@@ -200,6 +200,7 @@ dimensionedScalar eps_disp_death("eps_disp_death", dimensionSet(0, 0, -1, 0, 0, 
 
 dimensionedScalar D_enzyme ("D_enzyme", dimensionSet(0, 0, 0, 0, 0, 0, 0), transportProperties);
 dimensionedScalar M_b ("M_b", dimensionSet(0, 0, 0, 0, 0, 0, 0), transportProperties);
+dimensionedScalar gamma_disp ("gamma_disp", dimensionSet(0, 0, 0, 0, 0, 0, 0), transportProperties);
 
 
 volScalarField Mdim = M / M_inf;

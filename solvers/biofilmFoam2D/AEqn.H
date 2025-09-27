@@ -16,7 +16,7 @@ dimensionedScalar gamma (
 );
 
 
-tmp<volScalarField> Datmp = Da_bulk*(1.0 - M) + Da_biofilm*M;
+tmp<volScalarField> Datmp = Da_bulk*(1.0 - 0.3*M-0.7*E) + Da_biofilm*(0.3*M+0.7*E);
 
 volScalarField Da
 (

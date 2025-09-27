@@ -14,7 +14,7 @@ dimensionedScalar Dn_biofilm (
 Info << "min/max hill_N: " << gMin(hill_N) << " / " << gMax(hill_N) << endl;
 Info << "min/max M: " << gMin(M) << " / " << gMax(M) << endl;
 
-tmp<volScalarField> Dntmp = Dn_bulk*(1.0 - M) + Dn_biofilm*M;
+tmp<volScalarField> Dntmp = Dn_bulk*(1.0 - 0.3*M-0.7*E) + Dn_biofilm*(0.3*M-0.7*E);
 
 volScalarField Dn
 (
@@ -41,6 +41,7 @@ fvScalarMatrix NEqn
     + fvm::Sp(mu*C/(k_1+C), N)
     - fvm::Sp(k_4, N)
     - fvm::Sp(eta2*M/(k5+M), N)
+    + gamma_disp * eps_disp_death*max(scalar(0), (E_crit - E)/E_crit) * switchField * M
     
 );
 
