@@ -11,4 +11,4 @@
 #SBATCH --account=bassigem            # replace with your account if required
 
 # Run your Python script
-python param_scan.py 8
+python param_scan_2.2.py 8

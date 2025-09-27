@@ -47,7 +47,7 @@ fvScalarMatrix EEqn
 (
     fvm::ddt(E)    
     == 
-    gamma_EPS_prod * M * (C/(k_1 + C))
+    mu_e * M * (C/(k_1 + C))
     - k_deg * E
     - fvm::Sp(eps_disp*Be, E)
 );

@@ -9,8 +9,8 @@ import numpy as np
 # --- CONFIG ---
 container = "/hpc/group/bassigem/openfoam.sif"
 workdir = "/home/openfoam/biofilmFoam/dev/biofilmFoam"
-base_dir = Path("base")
-results_dir = Path("scan_results")
+base_dir = Path("base_2.2")
+results_dir = Path("scan_results_2.2")
 results_dir.mkdir(exist_ok=True)
 
 # Parameter scan
@@ -25,11 +25,18 @@ results_dir.mkdir(exist_ok=True)
 # }
 
 params = {
-    "tau": list(np.round(np.linspace(10e-09, 70e-09, 7), 14)),
+    
     "mu": list(np.round(np.linspace(0.0, 0.00006944444444*2, 12), 14)),
+    "mu_e": list(np.round(np.linspace(0.0, 0.00006944444444*2, 12), 14)),
+    "Y": list(np.round(np.linspace(0.5, 0.9, 5), 1)),
+    "Y_e": list(np.round(np.linspace(0.5, 0.9, 5), 1)),
+    "tau": list(np.round(np.linspace(10e-09, 70e-09, 7), 14)),
     "E_crit": sorted(list(np.round(np.linspace(0.0, 0.8, 9), 1)) + [0.15, 0.05]),
     "gamma_eps_prod": list(np.round(np.linspace(0.0, 0.00006944444444*2, 12), 14)),
-    "mu_e": list(np.round(np.linspace(0.0, 0.00006944444444*2, 12), 14)),
+    "gamma_disp": list(np.round(np.linspace(0.6, 1, 5), 1)),
+    "eps_disp_death": list(np.round(np.linspace(0.0, 0.00006944444444*2, 12), 14)),
+    
+    
 }
 
 # --- HELPERS ---
