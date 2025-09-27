@@ -14,7 +14,7 @@ dimensionedScalar Dn_biofilm (
 Info << "min/max hill_N: " << gMin(hill_N) << " / " << gMax(hill_N) << endl;
 Info << "min/max M: " << gMin(M) << " / " << gMax(M) << endl;
 
-tmp<volScalarField> Dntmp = Dn_bulk*(1.0 - 0.3*M-0.7*E) + Dn_biofilm*(0.3*M-0.7*E);
+tmp<volScalarField> Dntmp = Dn_bulk*(1.0 - E) + Dn_biofilm*(E);
 
 volScalarField Dn
 (
