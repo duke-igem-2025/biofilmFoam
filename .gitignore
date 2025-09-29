@@ -18,3 +18,6 @@ _templates/
 .vscode/
 scan_results/
 scan_results_enzyme/
+scan_results*
+dev/biofilmFoam/job*
+dev/biofilmFoam/param_scan*

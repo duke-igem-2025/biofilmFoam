@@ -5,6 +5,7 @@ import re
 import multiprocessing as mp
 import sys
 import numpy as np
+from concurrent.futures import ThreadPoolExecutor
 
 # --- CONFIG ---
 container = "/hpc/group/bassigem/openfoam.sif"
@@ -14,34 +15,19 @@ results_dir = Path("scan_results_2.2")
 results_dir.mkdir(exist_ok=True)
 
 # Parameter scan
-# params = {
-#     "E_crit": sorted(list(np.round(np.linspace(0.0, 0.8, 9), 1)) + [0.15, 0.05]),
-#     "eps_disp": list(np.round(np.linspace(0.0, 0.00006944444444*2, 12), 14)),
-#     "gamma_eps_prod": list(np.round(np.linspace(0.0, 0.00006944444444*2, 12), 14)),
-#     "M_b": [0, 0.25, 0.5, 1, 1.5, 2],
-#     "eps_disp_death": list(np.round(np.linspace(0.0, 0.00006944444444*2, 12), 14)),
-#     "mu": list(np.round(np.linspace(0.0, 0.00006944444444*2, 12), 14)),
-#     "tau": list(np.round(np.linspace(10e-09, 70e-09, 7), 14)),
-# }
-
 params = {
-    
-    "mu": list(np.round(np.linspace(0.0, 0.00006944444444*2, 12), 14)),
-    "mu_e": list(np.round(np.linspace(0.0, 0.00006944444444*2, 12), 14)),
+    "mu": list(np.round(np.linspace(0.0, 0.00006944444444 * 2, 6), 14)),
+    "mu_e": list(np.round(np.linspace(0.0, 0.00001157407407 * 2, 6), 14)),
     "Y": list(np.round(np.linspace(0.5, 0.9, 5), 1)),
     "Y_e": list(np.round(np.linspace(0.5, 0.9, 5), 1)),
     "tau": list(np.round(np.linspace(10e-09, 70e-09, 7), 14)),
     "E_crit": sorted(list(np.round(np.linspace(0.0, 0.8, 9), 1)) + [0.15, 0.05]),
-    "gamma_eps_prod": list(np.round(np.linspace(0.0, 0.00006944444444*2, 12), 14)),
+    "gamma_eps_prod": list(np.round(np.linspace(0.0, 0.00006944444444 * 2, 6), 14)),
     "gamma_disp": list(np.round(np.linspace(0.6, 1, 5), 1)),
-    "eps_disp_death": list(np.round(np.linspace(0.0, 0.00006944444444*2, 12), 14)),
-    
-    
+    "eps_disp_death": list(np.round(np.linspace(0.0, 0.00006944444444 * 2, 6), 14)),
 }
 
 # --- HELPERS ---
-import re
-
 def modify_transport_file(case_dir, param, value):
     transport_file = case_dir / "constant" / "transportProperties"
     lines = transport_file.read_text().splitlines()
@@ -68,21 +54,46 @@ def modify_setfields_file(case_dir, value):
         r"(fieldValues\s*\(.*volScalarFieldValue\s+M\s+[0-9.eE+-]+\s+volScalarFieldValue\s+E\s+)[0-9.eE+-]+",
         lambda m: m.group(1) + str(value),
         text,
-        flags=re.DOTALL
+        flags=re.DOTALL,
     )
     setfields_file.write_text(new_text)
+
 
 def run_in_container(cmd, case_name):
     full_cmd = f"cd {workdir}/{case_name} && {cmd}"
     subprocess.run(
         [
-            "singularity", "exec",
-            "--bind", "/hpc/group/bassigem/rs670/biofilmFoam:/home/openfoam/biofilmFoam",
+            "singularity",
+            "exec",
+            "--bind",
+            "/hpc/group/bassigem/rs670/biofilmFoam:/home/openfoam/biofilmFoam",
             container,
-            "bash", "--login", "-c", full_cmd
+            "bash",
+            "--login",
+            "-c",
+            full_cmd,
         ],
-        check=True
+        check=True,
     )
+
+
+def postprocess_case(case_name):
+    cmds = [
+        "biomass",
+        "sessileBiomass",
+        "autoinducer",
+        "eps",
+        "eps_max",
+        "biomass_max",
+        "enzyme",
+        "dispersedBiomass",
+    ]
+    # Run all postprocessing commands in parallel
+    with ThreadPoolExecutor(max_workers=len(cmds)) as executor:
+        futures = [executor.submit(run_in_container, cmd, case_name) for cmd in cmds]
+        for f in futures:
+            f.result()  # propagate exceptions
+
 
 # --- MAIN CASE FUNCTION ---
 def run_case(args):
@@ -105,9 +116,8 @@ def run_case(args):
     run_in_container("./clean", case_name)
     run_in_container("./run", case_name)
 
-    # Run postprocessing inside container
-    for cmd in ["biomass", "sessileBiomass", "autoinducer", "eps", "eps_max", "biomass_max", "enzyme", "dispersedBiomass"]:
-        run_in_container(cmd, case_name)
+    # 🚀 Parallel postprocessing
+    postprocess_case(case_name)
 
     # Save results
     run_dir = results_dir / case_name
@@ -117,6 +127,7 @@ def run_case(args):
 
     shutil.rmtree(case_dir)
     return case_name
+
 
 # --- ENTRY POINT ---
 if __name__ == "__main__":

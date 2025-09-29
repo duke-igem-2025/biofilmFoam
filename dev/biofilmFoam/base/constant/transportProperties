@@ -51,7 +51,7 @@ beta 0.00006388888889;
 
 
 n 2.5;
-tau 40e-09; // nm
+tau 50e-09; // nm
 
 eta1 0.0000474537037;
 eta2 0.00002430555556;
@@ -59,11 +59,11 @@ k5 0.7;
 
 E_threshold 0.1;
 
-E_crit 0.2;
+E_crit 0.3;
 eps_disp_death 0.00006944444444; 
 gamma_disp 0.9;
 
-D_enzyme 0;
+D_enzyme 1;
 
 alpha_lux 0.08316666667;
 beta_lux 0.001330666667;
